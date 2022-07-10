@@ -1,3 +1,5 @@
-module.exports = {
-    publicPath: '/scoreboard/'
-}
+const { defineConfig } = require('@vue/cli-service')
+
+module.exports = defineConfig({
+ publicPath: '/scoreboard/'
+})
