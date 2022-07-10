@@ -1,0 +1,23 @@
+{
+  "name": "my-vue-app",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tailwindcss/forms": "^0.5.2",
+    "firebase": "^9.9.0",
+    "tailwindcss": "^3.1.5",
+    "vue": "^3.2.25",
+    "vuefire": "^2.2.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.3.3",
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14",
+    "vite": "^2.9.9"
+  }
+}
