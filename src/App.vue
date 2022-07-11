@@ -6,28 +6,45 @@
         <legend>בקרי משחק</legend>
 
         <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          class="mx-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          @click="startHalf(Half.First)"
+        >
+          התחל
+        </button>
+        <button
+          class="mx-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          @click="stop()"
+        >
+          עצור
+        </button>
+        <div class="">
+          <button
+            class="mx-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            @click="reset"
+          >
+            אפס
+          </button>
+          <input
+            type="number"
+            min="0"
+            v-model="data.baseMinute"
+            step="1"
+            size="3"
+            class="w-16"
+          />
+        </div>
+
+        <button
+          class="mx-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           @click="startHalf(Half.First)"
         >
           התחל מחצית 1
         </button>
         <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          class="mx-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           @click="startHalf(Half.Second)"
         >
-          התחל מחצית 2
-        </button>
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          @click="stop()"
-        >
-          עצור
-        </button>
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          @click="clock = '00:00'"
-        >
-          אפס
+          מחצית 2
         </button>
       </fieldset>
 
@@ -121,20 +138,19 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref, watch } from 'vue'
-import Scoreboard from './components/Scoreboard.vue'
-import dataService from './services/data'
-import {onSnapshot } from "firebase/firestore";
+import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
+import Scoreboard from "./components/Scoreboard.vue";
+import dataService from "./services/data";
 
 enum GameState {
   NotStarted,
   InProgress,
-  Finished
+  Finished,
 }
 
 enum Half {
   First,
-  Second
+  Second,
 }
 
 const data = reactive({
@@ -150,48 +166,60 @@ const data = reactive({
     color_2: undefined,
     score: 0,
   },
-  currentHalf : Half.First,
+  currentHalf: Half.First,
   halfStartedTimeStamp: Date.now(),
   currentState: GameState.NotStarted,
+  baseMinute: 0,
 });
 
-const clock = ref("00:00");
+const clock = ref(0);
+const interval = ref();
 
 onMounted(async () => {
-  dataService.get().then(fsData => {
-    Object.assign(data, fsData)
-  })
-  dataService.listen(
-    fsData => {
-    Object.assign(data, fsData)
-  }
-  );
+  dataService.get().then((fsData) => {
+    Object.assign(data, fsData);
+  });
+  dataService.listen((fsData) => {
+    Object.assign(data, fsData);
+  });
 
-  setInterval(() => {
-    if(data.currentState === GameState.InProgress) {
-    const now = Date.now();
-    const diff = now - data.halfStartedTimeStamp;
-    const base = data.currentHalf === Half.First ? 0 : 45;
-    const minutes = (base + Math.floor(diff / 1000 / 60)).toString();
-    const seconds = (Math.floor(diff / 1000) % 60).toString();
-    clock.value = `${minutes.padStart(2,'0')}:${seconds.padStart(2,'0')}`;
+  interval.value = setInterval(() => {
+    if (data.currentState === GameState.InProgress) {
+      const now = Date.now();
+      const diff = now - data.halfStartedTimeStamp;
+      clock.value = diff;
     }
   }, 1000);
 });
 
+onUnmounted(() => {
+  clearInterval(interval.value);
+  interval.value = undefined;
+});
+
 const startHalf = (half: Half) => {
   data.currentHalf = half;
+  data.baseMinute = half === Half.Second ? 45 : 0;
   data.halfStartedTimeStamp = Date.now();
   data.currentState = GameState.InProgress;
-}
+};
 
-const stop = () => {
+const stop = (): void => {
   data.currentState = GameState.Finished;
-}
+};
 
-watch( data, (newData, oldData) => {
-  dataService.save(newData)
-}, { deep: true });
+const reset = (): void => {
+  stop();
+  clock.value = 0;
+};
+
+watch(
+  data,
+  (newData, oldData) => {
+    dataService.save(newData);
+  },
+  { deep: true }
+);
 </script>
 
 <style></style>

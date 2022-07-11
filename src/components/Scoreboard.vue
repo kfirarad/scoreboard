@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border-8 border-gray-200 00 flex text-xl leading-10 font-Open-Sans rounded-sm"
+    class="border-4 border-gray-200 00 flex text-xl leading-10 font-Open-Sans rounded-sm"
     style="width: 560px"
   >
     <div
@@ -28,7 +28,7 @@
     >
       {{ data.away_team.name }}
     </div>
-    <div class="text-center w-20 bg-white">{{ clock }}</div>
+    <div class="text-center w-20 bg-white">{{ formatClock(clock) }}</div>
   </div>
 </template>
 
@@ -37,4 +37,11 @@ import { def } from "@vue/shared";
 import { defineProps } from "vue";
 
 const { data, clock } = defineProps(["data", "clock"]);
+
+const formatClock = (secondsElsp: number): string => {
+  const totalSeconds = secondsElsp + data.baseMinute * 60 * 1000;
+  const minutes = Math.floor(totalSeconds / 60 / 1000).toString();
+  const seconds = (Math.floor(totalSeconds / 1000) % 60).toString();
+  return `${minutes.padStart(2, "0")}:${seconds.padStart(2, "0")}`;
+};
 </script>
