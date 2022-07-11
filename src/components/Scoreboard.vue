@@ -1,10 +1,10 @@
 <template>
   <div
-    class="border-4 border-gray-200 00 flex text-xl leading-10 font-Open-Sans rounded-sm"
+    class="border-4 border-gray-200 00 flex text-xl leading-10 font-Open-Sans rounded-sm max-w-screen"
     style="width: 560px"
   >
     <div
-      class="w-48 text-center text-bold"
+      class="w-48 text-center font-bold"
       :style="{
         background: data.home_team.color_1,
         color: data.home_team.color_2,
@@ -20,7 +20,7 @@
       {{ data.away_team.score }}
     </div>
     <div
-      class="w-48 text-center"
+      class="w-48 text-center font-bold"
       :style="{
         background: data.away_team.color_1,
         color: data.away_team.color_2,

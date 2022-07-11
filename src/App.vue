@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="w-screen">
     <Scoreboard :data="data" :clock="clock" />
-    <div class="mt-10 w-96">
+    <div class="mt-10 w-screen">
       <fieldset class="border m-4 p-4">
         <legend>בקרי משחק</legend>
 
@@ -47,92 +47,93 @@
           מחצית 2
         </button>
       </fieldset>
+      <div class="flex w-screen">
+        <fieldset class="border m-4 p-4 w-1/2">
+          <legend>קבוצה אורחת</legend>
 
-      <fieldset class="border m-4 p-4">
-        <legend>קבוצה ביתית</legend>
-
-        <label class="block">
-          <span class="text-gray-700">שם</span>
-          <input
-            type="text"
-            v-model="data.home_team.name"
-            class="form-input mt-1 block w-full"
-            :disabled="data.currentState === GameState.InProgress"
-          />
-        </label>
-        <label class="block">
-          <span class="text-gray-700">צבעים</span>
-          <div class="flex">
+          <label class="block">
+            <span class="text-gray-700">שם</span>
             <input
-              type="color"
-              v-model="data.home_team.color_1"
-              class="mt-1 block w-1/2"
+              type="text"
+              v-model="data.home_team.name"
+              class="form-input mt-1 block w-full"
               :disabled="data.currentState === GameState.InProgress"
             />
-            <input
-              type="color"
-              v-model="data.home_team.color_2"
-              class="mt-1 block w-1/2"
-              :disabled="data.currentState === GameState.InProgress"
-            />
-          </div>
-        </label>
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          @click="data.home_team.score = data.home_team.score + 1"
-        >
-          שער+1
-        </button>
-        <button
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          @click="data.home_team.score = data.home_team.score - 1"
-        >
-          שער-1
-        </button>
-      </fieldset>
+          </label>
+          <label class="block">
+            <span class="text-gray-700">צבעים</span>
+            <div class="flex">
+              <input
+                type="color"
+                v-model="data.home_team.color_1"
+                class="mt-1 block w-1/2"
+                :disabled="data.currentState === GameState.InProgress"
+              />
+              <input
+                type="color"
+                v-model="data.home_team.color_2"
+                class="mt-1 block w-1/2"
+                :disabled="data.currentState === GameState.InProgress"
+              />
+            </div>
+          </label>
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            @click="data.home_team.score = data.home_team.score + 1"
+          >
+            שער+1
+          </button>
+          <button
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            @click="data.home_team.score = data.home_team.score - 1"
+          >
+            שער-1
+          </button>
+        </fieldset>
 
-      <fieldset class="border m-4 p-4">
-        <legend>קבוצה אורחת</legend>
+        <fieldset class="border m-4 p-4 w-1/2">
+          <legend>קבוצה ביתית</legend>
 
-        <label class="block">
-          <span class="text-gray-700">שם</span>
-          <input
-            type="text"
-            v-model="data.away_team.name"
-            class="form-input mt-1 block w-full"
-            :disabled="data.currentState === GameState.InProgress"
-          />
-        </label>
-        <label class="block">
-          <span class="text-gray-700">צבעים</span>
-          <div class="flex">
+          <label class="block">
+            <span class="text-gray-700">שם</span>
             <input
-              type="color"
-              v-model="data.away_team.color_1"
-              class="mt-1 block w-1/2"
+              type="text"
+              v-model="data.away_team.name"
+              class="form-input mt-1 block w-full"
               :disabled="data.currentState === GameState.InProgress"
             />
-            <input
-              type="color"
-              v-model="data.away_team.color_2"
-              class="mt-1 block w-1/2"
-              :disabled="data.currentState === GameState.InProgress"
-            />
-          </div>
-        </label>
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          @click="data.away_team.score = data.away_team.score + 1"
-        >
-          שער+1
-        </button>
-        <button
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          @click="data.away_team.score = data.away_team.score - 1"
-        >
-          שער-1
-        </button>
-      </fieldset>
+          </label>
+          <label class="block">
+            <span class="text-gray-700">צבעים</span>
+            <div class="flex">
+              <input
+                type="color"
+                v-model="data.away_team.color_1"
+                class="mt-1 block w-1/2"
+                :disabled="data.currentState === GameState.InProgress"
+              />
+              <input
+                type="color"
+                v-model="data.away_team.color_2"
+                class="mt-1 block w-1/2"
+                :disabled="data.currentState === GameState.InProgress"
+              />
+            </div>
+          </label>
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            @click="data.away_team.score = data.away_team.score + 1"
+          >
+            שער+1
+          </button>
+          <button
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            @click="data.away_team.score = data.away_team.score - 1"
+          >
+            שער-1
+          </button>
+        </fieldset>
+      </div>
     </div>
   </div>
 </template>
@@ -146,6 +147,7 @@ enum GameState {
   NotStarted,
   InProgress,
   Finished,
+  Reset,
 }
 
 enum Half {
@@ -189,6 +191,9 @@ onMounted(async () => {
       const diff = now - data.halfStartedTimeStamp;
       clock.value = diff;
     }
+    if (data.currentState === GameState.Reset) {
+      clock.value = 0;
+    }
   }, 1000);
 });
 
@@ -209,8 +214,7 @@ const stop = (): void => {
 };
 
 const reset = (): void => {
-  stop();
-  clock.value = 0;
+  data.currentState = GameState.Reset;
 };
 
 watch(
