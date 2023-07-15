@@ -1,12 +1,13 @@
 import { initializeApp } from 'firebase/app';
 
 
-let firebaseConfig = {
-  apiKey: "AIzaSyDlt4mjekS-3HaKE97X05UC3LYqg0owD-0",
-  authDomain: "scoreboard-aaa9b.firebaseapp.com",
-  projectId: "scoreboard-aaa9b",
-  storageBucket: "scoreboard-aaa9b.appspot.com",
-  messagingSenderId: "81491788936",
-  appId: "1:81491788936:web:8a50181dd47e7463468b3d"
+const firebaseConfig = {
+  apiKey: "AIzaSyB2dTYEqjLqbxmvA0bS8LQbrp_A8pNnvt8",
+  authDomain: "scoreboard-3d310.firebaseapp.com",
+  projectId: "scoreboard-3d310",
+  storageBucket: "scoreboard-3d310.appspot.com",
+  messagingSenderId: "771328516557",
+  appId: "1:771328516557:web:2e58238ee9375af770a484"
 };
+
 export default initializeApp(firebaseConfig);
